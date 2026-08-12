@@ -1,0 +1,643 @@
+CP360
+AI Operations Brain
+Frozen Architecture & Claude Code Execution Blueprint
+Version 4.0 — FINAL STRATEGIC ARCHITECTURE
+DeckArc Production Pilot | Multi-company CP360 Platform | Two-Way Voice Enabled | Lean Infrastructure
+
+Architecture Freeze
+This document supersedes prior v2/v3 architectural interpretations. The business domains are enterprise-scale; the implementation remains deliberately lean. CP360 must not over-agentize, over-service, or over-infrastructure the platform.
+ 
+1. Executive Decision
+CP360 will be built as an AI-native construction operating system, not as a collection of chatbots. The platform must support enterprise-scale operations while remaining inexpensive and simple to run at DeckArc's current scale.
+Core Rule
+Design boundaries for a multi-billion-dollar business. Build infrastructure for today's measured load. Scale components only when real usage, reliability or organizational load proves the need.
+•	The AI workforce is native to CP360. No standalone DeckArc AI application.
+•	The user experience is one calm operating product: Command Center, Action Center, Projects, and Voice.
+•	The initial workforce is limited to six meaningful agents.
+•	Finance is initially deterministic services + SOP workflows, not a separate AI executive.
+•	Audit is P1 foundation infrastructure, not a later reporting feature.
+•	Scheduled operations are first-class triggers using the same workflow system as UI, voice and integrations.
+•	Gmail, Google Calendar and Google Drive use one shared Integration Gateway.
+•	One governed Knowledge Brain. No vector database or memory store per agent.
+•	The Chief of Staff is an executive intelligence/compression agent, not the technical router.
+2. Final Business Organization
+The conceptual organization should look like an enterprise company, but the technical system must not literally recreate corporate management layers.
+Figure 1 — Frozen Enterprise Business Hierarchy
+                         VIMALA + RAMESH
+                               |
+                               v
+                    AI CHIEF OF STAFF
+               Executive Intelligence Layer
+                               |
+        +----------------------+----------------------+
+        |                      |                      |
+        v                      v                      v
+     REVENUE              OPERATIONS               FINANCE
+        |                      |                      |
+   Sales Agent          Project Ops Agent       Finance Services
+   Estimator Agent             |                + Finance SOPs
+                               |
+                        +------+------+
+                        |             |
+                        v             v
+                 COMPLIANCE       CUSTOMER
+                    AGENT          SUCCESS
+                                    AGENT
+
+Business domains remain:
+Revenue | Operations | Finance | Compliance | Customer Success
+
+Initial agentic workers:
+Chief of Staff | Sales | Estimator | Project Ops | Compliance | Customer Success
+
+3. What Is an Agent vs. a Service?
+Do not equate an org-chart box with an AI agent. Use this test before creating any new agent.
+Question	If YES	If NO
+Does it own an ongoing business outcome?	Agent candidate	Prefer service/SOP
+Does it require interpretation across changing context?	Agent candidate	Prefer deterministic code
+Does it make bounded decisions within authority?	Agent candidate	Prefer workflow/rules
+Does it manage multi-step work over time?	Agent candidate	Could still be workflow
+Does it handle meaningful exceptions?	Agent candidate	Prefer normal automation
+Would a separate identity materially improve ownership, permissions or evaluation?	Agent candidate	Keep under existing agent
+Agent Creation Gate
+Every proposed new agent must document why an SOP, deterministic service, workflow, or capability under an existing agent is insufficient. If that case is weak, do not create the agent.
+4. Frozen Initial AI Workforce
+Agent	Business ownership	Not responsible for
+AI Chief of Staff	Executive priorities, exception compression, decision preparation, morning/end-of-day synthesis	Routing every event; routine project work
+AI Sales Agent	Lead intake, qualification, follow-up, pipeline progression	Detailed estimating; project execution
+AI Estimator	Scope normalization, estimate reasoning, comparable/history analysis, pricing recommendation	Final price authorization; sales follow-up
+AI Project Ops Agent	Project execution intelligence, dependencies, trades, materials, field updates, risks, tomorrow readiness	Regulatory interpretation; client relationship ownership
+AI Compliance Agent	HOA/zoning/permits/inspections/compliance documents	General project scheduling except compliance dependencies
+AI Customer Success Agent	Verified client communication, decisions, selections, closeout, warranty/reviews	Pricing authority; construction sequencing decisions
+5. Finance Architecture — Deliberately Not Over-Agentized
+Figure 2 — Finance Domain Without Unnecessary Agent Proliferation
+                       FINANCE DOMAIN
+                             |
+              +--------------+--------------+
+              |              |              |
+              v              v              v
+        Billing Service    AP Workflow    Collections SOP
+              |                              |
+              v                              v
+        Margin Engine                 Escalation Workflow
+              |
+              v
+        Cash Forecast Engine
+
+AI is invoked only for:
+- ambiguous invoice/client responses
+- dispute interpretation
+- explanation/recommendation
+- unusual financial exception synthesis
+
+•	Billing mathematics, due dates, margin calculations and cash projections are deterministic.
+•	Collections can remain SOP-driven until volume/complexity justifies an independent agent.
+•	No autonomous bank/payment movement in initial phases.
+•	A future AI Controller can be introduced without changing the platform architecture.
+6. Final Technical Architecture
+Figure 3 — Frozen CP360 Execution Architecture
+                         CP360 CORE
+
+Events ------+
+Schedules ---+
+Voice -------+
+Gmail -------+
+Calendar ----+----> ROUTE ---> SOP ---> WORKFLOW
+Drive -------+                         |
+Human -------+              +----------+----------+
+API ---------+              |          |          |
+                            v          v          v
+                          CODE       AI        HUMAN
+                            |          |          |
+                            +----------+----------+
+                                       |
+                                       v
+                                CONTROLLED TOOLS
+                                       |
+                  +--------------------+--------------------+
+                  |                    |                    |
+                  v                    v                    v
+                CP360              Integrations         External Systems
+                                       |
+                                       v
+                                  VERIFICATION
+                                       |
+                                       v
+                                UNIVERSAL AUDIT
+                                       |
+                                       v
+                              METRICS / EVALUATION
+                                       |
+                                       v
+                                 KNOWLEDGE BRAIN
+
+7. CODE → AI → HUMAN Routing Principle
+Every operational task should use the cheapest reliable execution method.
+Figure 4 — Cost and Reliability Routing Decision
+                    OPERATIONAL NEED
+                           |
+                           v
+              Can deterministic code do it
+              reliably and completely?
+                    /             \
+                  YES              NO
+                   |                |
+                   v                v
+                 CODE        Does it require
+                              interpretation?
+                               /        \
+                             NO          YES
+                              |            |
+                              v            v
+                           WORKFLOW        AI
+                                          |
+                                 Does authority /
+                                  judgment exceed
+                                  AI permission?
+                                    /        \
+                                  NO          YES
+                                   |            |
+                                   v            v
+                                 EXECUTE       HUMAN
+
+•	Use CODE for calculations, deadlines, permissions, status rules, duplicates, dependency math, thresholds and exact state transitions.
+•	Use AI for interpretation, synthesis, extraction, communication drafting, conflict analysis and contextual reasoning.
+•	Use HUMAN for authority, major price/scope commitments, legal disputes, compensation, money movement and unusual judgment.
+8. Chief of Staff — Executive Compression, Not Routing
+Figure 5 — Executive Compression Model
+10,000 projects / millions of events (future scale)
+                     |
+                     v
+          Deterministic Event + Rule Layer
+                     |
+                     v
+              Material Exceptions
+                     |
+                     v
+               Domain Workflows
+                     |
+                     v
+           AI CHIEF OF STAFF
+                     |
+              Executive Compression
+                     |
+                     v
+              5-10 decisions that
+              actually matter today
+
+•	The Chief of Staff should not see or reason over every raw event.
+•	It receives resolved exceptions, risks, decisions and synthesized domain outcomes.
+•	Its job is prioritization, consequence framing and executive decision preparation.
+•	This limits cost and avoids an LLM becoming infrastructure middleware.
+9. One Shared Integration Gateway
+Figure 6 — Shared Google Workspace Integration
+                 CP360 INTEGRATION GATEWAY
+                            |
+          +-----------------+-----------------+
+          |                 |                 |
+          v                 v                 v
+        Gmail            Calendar            Drive
+          |                 |                 |
+          +-----------------+-----------------+
+                            |
+                            v
+                    NORMALIZED CP360 EVENTS
+                            |
+                            v
+                    SOP / WORKFLOW ENGINE
+
+•	CP360 owns OAuth/token storage. Agents never hold raw Google credentials.
+•	Per-agent/per-SOP policy further restricts what can be read or written.
+•	External email/calendar/Drive state is supporting evidence or execution surface; CP360 remains canonical operational state.
+•	Add connector health, sync cursor, stale-data detection, idempotency and reconcile-before-retry.
+•	Do not create one Gmail/Calendar/Drive connector per agent.
+10. One Knowledge Brain
+Figure 7 — Shared Governed Knowledge
+                      KNOWLEDGE BRAIN
+                            |
+       +--------------------+--------------------+
+       |                    |                    |
+       v                    v                    v
+  Project History      Vendor History      Company SOPs
+       |                    |                    |
+       v                    v                    v
+  Estimate History     Jurisdictions        Lessons Learned
+                            |
+                            v
+                     Scoped Retrieval
+                            |
+        +-----------+-------+-------+-----------+
+        |           |               |           |
+      Sales      Project Ops     Compliance   Customer
+
+•	No separate vector database per agent.
+•	Do not duplicate whole Gmail/Drive stores into AI memory.
+•	Canonical facts belong in CP360 domain tables.
+•	Working hypotheses belong in workflow/risk state.
+•	Durable knowledge requires source, date/version, scope and review status.
+11. Scheduled Operating Rhythm
+Scheduled events make CP360 proactive, but they must be cheap: deterministic sweeps first; AI only for exceptions.
+Cadence	Routine	Primary owner	AI cost rule
+Morning	Morning Command Center	Chief of Staff	AI sees material exceptions, not raw records
+Morning	Today's Work Verification	Project Ops	Code checks gates first
+Midday	Critical Exception Recheck	Chief of Staff	Only unresolved critical exceptions
+Afternoon	Tomorrow Readiness	Project Ops	Deterministic gate sweep; AI interprets exceptions
+Afternoon	Trade Confirmation Cutoff	Project Ops	Workflow/message automation first
+Afternoon	Client Communication Check	Customer Success	Draft only for projects needing update
+Daily	Permit/Inspection Sweep	Compliance	Rules/deadlines first
+Daily	Billing/AR/.Margin Sweep	Finance services	Deterministic math first
+End of day	Daily Close / Tomorrow Setup	Chief of Staff	Synthesize unresolved material items
+Weekly	14-Day Look-Ahead	Project Ops	Calculate dependencies before AI synthesis
+Weekly	Sales Pipeline Hygiene	Sales	Rules find stale leads; AI handles nuanced follow-up
+Weekly	Executive Portfolio Review	Chief of Staff	Aggregated KPI/exception summary
+Monthly	Knowledge Review	System + reviewers	AI proposes; governed promotion
+Monthly	Connector/Permission Audit	Admin/System	Deterministic health/permission checks
+Scheduled Event Rule
+Do not wake every agent on a fixed timer. Run deterministic sweeps. If nothing changed and no exception exists, stop with zero AI call.
+12. Universal Audit — Foundation Priority
+Figure 8 — Universal Audit Flow
+Human / Agent / Voice / Scheduler / Gmail / Calendar / Drive / API
+                              |
+                              v
+                            EVENT
+                              |
+               +--------------+--------------+
+               |                             |
+               v                             v
+            WORKFLOW                    AUDIT RECORD
+               |
+               v
+            DECISION -----------------> AUDIT RECORD
+               |
+               v
+            APPROVAL -----------------> AUDIT RECORD
+               |
+               v
+             TOOL --------------------> AUDIT RECORD
+               |
+               v
+          STATE CHANGE ---------------> AUDIT RECORD
+               |
+               v
+          VERIFICATION ---------------> AUDIT RECORD
+
+Conceptually one audit system; physically use correlated record types, not necessarily one giant table.
+Audit record type	Minimum fields
+Event	event_id, company_id, project_id, actor, type, payload version, timestamp, correlation_id
+Workflow run	workflow_id, SOP/version, state, trigger, waiting_on, due_at
+Agent run	agent_id, model/provider/version, structured proposal, evidence IDs
+Tool call	tool/action, authorized actor, request hash, provider/external ID, result
+Approval	approval_id, exact payload hash/version, approver, decision, channel, timestamp
+State change	object, before/after references, reason/source
+Human override	user, action overridden, reason, timestamp
+Verification	expected outcome, observed outcome, success/mismatch
+•	Audit is P1 and must exist before meaningful autonomous writes.
+•	Everything is correlated through company_id + project_id + workflow_id + correlation_id.
+•	Support workflow replay and incident investigation.
+•	Audit should reuse the existing database initially unless measured volume justifies specialized storage.
+13. AI Control Plane & Cost Governance
+Metric	Purpose
+Workflow success rate	Did the business outcome complete?
+Human edit/rejection rate	Is the AI actually useful/trustworthy?
+False/missed exception rate	Is the system noisy or blind?
+Duplicate action rate	Must be effectively zero
+Tool/connector failure rate	Operational reliability
+AI cost per SOP/workflow	Financial control
+Cost per company/project	Unit economics
+Model/provider usage	Routing optimization
+Voice minutes/cost	Voice economics
+Time saved / cycle-time improvement	Business value
+Figure 9 — AI Cost Routing
+                 MODEL / EXECUTION ROUTER
+                          |
+        +-----------------+------------------+
+        |                 |                  |
+        v                 v                  v
+   NO AI REQUIRED     SIMPLE AI         DEEPER AI
+       $0               low cost          higher cost
+ deterministic         extraction,        conflict,
+  service/rule        classification      estimate,
+                                         synthesis
+
+14. Explicit Cost-Control Rules for Claude Code
+Non-Negotiable
+Claude Code must not introduce enterprise infrastructure merely because the future architecture could use it. Create clean replaceable boundaries first. Physically split or scale components only after measured need.
+Claude Code must NOT introduce the following unless one of the approval conditions below is met:
+Do NOT introduce by default	Approval condition
+Kubernetes	Existing CP360 already relies on it OR measured deployment/load/reliability requirement cannot be met simply
+Dozens of microservices	A module has independently measured scaling/reliability/deployment needs that justify extraction
+Separate runtime per agent	Isolation/scaling/security evidence proves a shared runtime is insufficient
+Vector database per agent	Never by default; one governed knowledge layer unless a proven hard isolation requirement exists
+Event infrastructure per department	Never; use one event abstraction/fabric
+Multiple queues because 'enterprise'	Only if workload classes require independent durability/priority/scaling
+Giant data warehouse	Only when operational/reporting needs exceed transactional/reporting patterns and ROI is documented
+Elaborate agent-to-agent chat	Avoid; use structured events/workflows/canonical state
+Separate voice business logic	Never; voice must invoke the same SOPs/tools/policies
+LLM for deterministic calculations	Never unless the output is explanatory, not authoritative math
+Duplicate connector per agent	Never; use Integration Gateway
+Duplicate knowledge store per agent	Never; use scoped shared Knowledge Brain
+•	Prefer a modular monolith using the existing CP360 deployment unless Phase 0 proves a stronger reason.
+•	Logical modules may be independently extractable later without being separately deployed today.
+•	Every new infrastructure component requires a short ADR documenting problem, cheaper alternatives considered, measured evidence, expected cost, and rollback.
+•	Every AI invocation must answer: Why can deterministic code not do this reliably?
+•	Every new agent must answer: Why can an SOP/service under an existing agent not own this?
+•	Every recurring scheduled job must answer: Can a deterministic change detector avoid the AI call?
+•	Every new data store must answer: Why can the canonical CP360 DB / existing storage not safely serve this need?
+15. Recommended Lean Physical Deployment
+Figure 10 — Lean Initial Physical Architecture
+                 EXISTING CP360 APPLICATION
+                           |
+          +----------------+----------------+
+          |                                 |
+          v                                 v
+     CP360 FRONTEND                    CP360 BACKEND
+                                              |
+                +-----------------------------+----------------------+
+                |              |              |                     |
+                v              v              v                     v
+             Domain         AI/SOP         Voice              Integrations
+             Services       Workflows      Adapter               Gateway
+                |              |              |                     |
+                +--------------+--------------+---------------------+
+                               |
+                               v
+                         EXISTING DATABASE
+                               |
+                               v
+                      Existing object/file storage
+
+Logical boundaries should exist in code even if they share one deployable backend initially.
+Logical boundary	Initial recommendation
+Domain services	Keep inside existing backend
+Agent/SOP registry	Existing database/config tables
+Workflow state	Existing DB unless current stack already provides durable workflow infrastructure
+Events	Use existing application event/job mechanism first; add heavier broker only if measured need
+Audit	Existing DB with indexed correlated tables initially
+Knowledge	Existing DB metadata + one shared retrieval/index approach
+Google integrations	One shared server-side connector layer
+Voice	Provider adapter + session service; same backend tools/policies
+Analytics	Operational metrics in current reporting stack initially
+16. Billion-Dollar Scale Without Billion-Dollar Day-One Spend
+Future enterprise requirement	Boundary we design now	Infrastructure we delay until proven
+10,000+ projects	company/project IDs, domain events, durable workflow contracts	specialized distributed event platform
+Thousands of concurrent workflows	idempotent workflow interfaces, correlation IDs	separate workflow cluster
+Many regions	company/region configuration and timezone-aware policies	regional deployment topology
+Large audit volume	append-friendly correlated audit schema	specialized event/audit store
+Many AI models/providers	provider-neutral model routing contract	complex multi-provider optimization service
+Large knowledge corpus	scoped knowledge interfaces and metadata	dedicated high-scale vector/search cluster
+Large connector volume	shared connector interfaces and provider IDs	independent connector workers/services
+Enterprise Scalability Principle
+We are designing replacement boundaries, not pre-purchasing future infrastructure.
+17. Apple-Simple User Experience
+Figure 11 — Target Executive Simplicity
++--------------------------------------------------+
+| CP360                                             |
+|                                                  |
+| Good morning.                                    |
+|                                                  |
+| 12 Projects    8 On Track   3 Attention   1 Risk |
+|                                                  |
+| TODAY                                            |
+| 2 Need Your Decision                             |
+| 3 AI Is Handling                                 |
+|                                                  |
+| TOMORROW                                         |
+| 1 project may be delayed                         |
+|                                                  |
+| MONEY                                            |
+| $18,400 ready to invoice   $7,800 overdue        |
+|                                                  |
+|                 [ Ask CP360 ]                    |
++--------------------------------------------------+
+
+•	One Command Center.
+•	One Action Center.
+•	One voice entry point.
+•	Project intelligence appears inside normal project screens.
+•	Agent/SOP details are advanced admin, not everyday navigation.
+•	Avoid badges, colors and alerts unless they change a decision.
+•	The UI explains outcomes; it does not expose orchestration internals.
+18. Action Center
+Queue	Meaning
+Needs My Decision	Exact human approval or choice is required
+Critical Now	Material unresolved risk with time-sensitive impact
+AI Handling	AI/workflow is actively resolving it; no human action currently required
+Watching	System monitoring a condition; no alert unless threshold changes
+Completed	Recently verified actions with evidence
+Blocked	Missing data, person response, connector or tool is preventing completion
+•	Every card answers: What happened? Why does it matter? What happens next? Who owns it? By when?
+•	Do not create separate inboxes for every agent.
+19. Two-Way Voice Architecture
+Figure 12 — Voice Uses the Same Operating Core
+HEAR
+  |
+  v
+TRANSCRIBE
+  |
+  v
+RESOLVE AUTHENTICATED USER + PROJECT/ENTITY CONTEXT
+  |
+  v
+CLASSIFY INTENT
+  |
+  v
+READ CANONICAL CP360 STATE
+  |
+  v
+CREATE STRUCTURED PROPOSED ACTION
+  |
+  v
+POLICY / AUTHORITY CHECK
+  |
+  +---- consequential/ambiguous ----> EXPLICIT CONFIRMATION
+  |                                       |
+  +---------------------------------------+
+                  |
+                  v
+          CONTROLLED TOOL
+                  |
+                  v
+             VERIFY RESULT
+                  |
+                  v
+             SPEAK RESULT
+                  |
+                  v
+                AUDIT
+
+•	No separate voice business rules.
+•	Barge-in stops TTS and updates/cancels pending unexecuted action.
+•	Voice does not increase authority.
+•	Amounts, dates, project names, approvals and commitments require stricter confidence/read-back.
+•	Authenticated session is required; speaker recognition alone is not authorization.
+20. Core Scheduled Events and Default Sequence
+Figure 13 — Example Operating Clock (Company-Configurable)
+06:00  Overnight reconciliation / connector health
+06:30  Project readiness calculations
+07:00  Trade / material / inspection rule checks
+07:30  Chief of Staff exception synthesis
+08:00  Morning Command Center
+
+12:00  Critical exception recheck
+
+15:00  Tomorrow Readiness
+16:00  Trade confirmation cutoff
+16:30  Client communication sweep
+17:00  Tomorrow plan finalization
+17:30  End-of-day close
+
+Weekly: 14-day look-ahead / sales hygiene / executive portfolio
+Monthly: knowledge governance / connector permission review
+
+Times are configuration examples only. The scheduler must support company timezone, business calendar, holidays and project-status exclusions.
+21. Implementation Priority — Frozen
+Priority	Deliverable	Why
+P0	Inspect existing CP360 + canonical data/tool map	Do not design around assumptions
+P1	Audit + event abstraction + SOP/workflow + controlled tools + policy/approval	Trust foundation before autonomy
+P2	Project Ops + field update + tomorrow readiness	Highest daily operational value
+P3	Trade/material coordination	Removes repeated field follow-up
+P4	Scheduled operating rhythm + Chief of Staff + Action Center	Turns operations into management by exception
+P5	Customer Success	Consistent homeowner communication
+P6	Two-way Voice	Natural interface over proven workflows
+P7	Compliance	Permit/inspection/document readiness
+P8	Finance services + AR/margin	Protect cash and margin
+P9	Sales + Estimator	Revenue intelligence
+P10	Per-SOP L4 autonomy	Earned autonomy
+P11	Multi-company productization	Generalize proven DeckArc workflows
+22. Phase Gates
+Phase	Exit gate
+P0	Current architecture, reusable modules, integrations, scheduler/jobs, role model and data gaps documented
+P1	One event/scheduled trigger can run SOP -> policy -> approval/tool -> verification -> audit and be replayed
+P2-P3	3-5 live projects produce accurate status/readiness/trade workflows in L1-L3
+P4	Owners can manage a day from one Command/Action Center with low alert noise
+P5	Client updates use verified facts and have low human edit rate
+P6	Voice query/update/action/correction works through same tools and audit
+P7-P9	Domain exceptions match human review; no unauthorized consequential action
+P10	Selected SOP meets measured reliability, cost and rollback criteria before L4
+23. Claude Code Master Execution Instructions
+Use This Section as the Operating Instruction
+The attached architecture is authoritative. The existing CP360 repository is the technical reality. Claude Code must connect the two with the smallest safe change set.
+23.1 First Rule: Inspect Before Building
+•	CP360 is already present in this Claude Code environment.
+•	Do not create a greenfield app or parallel AI backend.
+•	Inspect existing frontend/backend, auth, tenant model, database/ORM, project modules, ProjectPulse, schedules, tasks, photos/docs, permits, inspections, delays, approvals, conversations, notifications, finance/change orders, AI code, scheduler/jobs/queues, integrations and audit.
+•	Identify exactly which existing services can become controlled agent tools.
+•	Identify current Gmail, Google Calendar and Google Drive code, OAuth storage/scopes, provider IDs, sync mechanisms and project linkage.
+•	Identify current deployment topology and hosting costs where visible.
+•	Do not refactor unrelated working code during discovery.
+23.2 Required Phase 0 Files
+•	CP360_AI_PHASE0_DISCOVERY.md
+•	CP360_AI_GAP_ANALYSIS.md
+•	ADR-CP360-AI-001_CANONICAL_SYSTEM.md
+•	ADR-CP360-AI-002_LEAN_INFRASTRUCTURE.md
+•	CP360_AI_IMPLEMENTATION_PLAN.md
+•	CP360_INTEGRATION_PERMISSION_MATRIX.md
+•	CP360_SCHEDULED_OPERATING_EVENTS.md
+•	CP360_AI_COST_BASELINE.md
+23.3 Cost Baseline Required Before New Infrastructure
+Before proposing new infrastructure, document the current stack and cost-impact assumptions. For every proposed component include:
+•	Problem it solves.
+•	Why existing CP360 capability is insufficient.
+•	Simpler alternatives considered.
+•	Current measured load or failure mode proving need.
+•	Expected monthly fixed and variable cost.
+•	Operational burden introduced.
+•	Exit/rollback plan.
+•	What future metric would trigger scaling.
+23.4 Hard Architecture Constraints
+•	Prefer the current CP360 deployment and modular-monolith pattern unless Phase 0 evidence proves otherwise.
+•	One Agent Registry; no hard-coded business logic by specific agent name when configuration can express it.
+•	One SOP/workflow system for UI, scheduler, voice, email and API triggers.
+•	One Integration Gateway for Gmail/Calendar/Drive.
+•	One Knowledge Brain with scoped retrieval.
+•	One policy/authority engine.
+•	One correlated audit architecture.
+•	Chief of Staff receives material exceptions, not every raw event.
+•	Finance calculations remain deterministic.
+•	Voice uses identical tools, policies and workflows as non-voice inputs.
+•	Do not duplicate an existing CP360 module merely to make an 'AI version'.
+23.5 Explicit 'Do Not Build' Gate
+Claude Code must NOT add the following without a written ADR and product-owner approval:
+•	Kubernetes or a new container orchestration layer.
+•	A broad microservice decomposition.
+•	A separate deployable service per agent.
+•	A vector database/index per agent.
+•	A department-specific event bus.
+•	A separate queue for each agent/department.
+•	A data warehouse/lake solely for the AI initiative.
+•	Free-form agent-to-agent communication infrastructure.
+•	A separate voice workflow/business-logic engine.
+•	An unrestricted database/SQL tool for any model.
+•	Direct agent access to OAuth tokens/secrets.
+•	LLM calls for authoritative arithmetic, dates, permissions or deterministic state transitions.
+•	A new agent when an existing agent + SOP/service can own the responsibility.
+•	Polling all projects/messages with AI when rules/change detection can filter first.
+23.6 AI Invocation Gate
+Before implementing each AI call, answer in code review:
+1.	What specific reasoning/interpretation requires AI?
+2.	What deterministic pre-filter reduces input to only relevant exceptions?
+3.	What structured output schema will be enforced?
+4.	What authoritative data source is used?
+5.	What happens if the model is unavailable or malformed?
+6.	What is the cheaper model class that can reliably perform this task?
+7.	How will AI cost be measured by agent/SOP/workflow/company?
+23.7 New Agent Gate
+Before adding any agent beyond the frozen six, create an ADR containing:
+8.	Business outcome the proposed agent independently owns.
+9.	Why an existing agent cannot own the SOP.
+10.	Why a deterministic service/workflow is insufficient.
+11.	Required tools and permissions.
+12.	Expected volume and exception complexity.
+13.	Independent KPIs/evaluation.
+14.	Expected AI/runtime cost.
+15.	How the new agent can be disabled without breaking the domain.
+23.8 Scheduled Event Gate
+•	Implement scheduled triggers using existing scheduler/background-job mechanisms where possible.
+•	Run deterministic checks first.
+•	Do not invoke AI when no material change/exception exists.
+•	Deduplicate against event-driven workflows.
+•	Make cadence/time company-configurable.
+•	Record every scheduled run/exception/action in audit.
+23.9 Definition of Done
+Do not mark a feature complete because a message was sent, a model returned text, or a UI card rendered.
+Business Completion Example
+Trade confirmation is DONE only when the correct trade/project/date/scope are confirmed, prerequisites are checked, CP360 is updated, evidence is linked, dependent workflows are triggered, and audit/verification are recorded.
+23.10 Implementation Sequence for Claude Code
+•	Phase 0: Inspect and document. STOP before broad architectural changes.
+•	Phase 1: Implement/extend audit, event abstraction, SOP registry, workflow persistence, controlled tools, authority/approval and feature flags.
+•	Phase 2: Implement Project Ops field update/daily review/tomorrow readiness.
+•	Phase 3: Implement trade/material workflows.
+•	Phase 4: Add scheduled operating cadence, Chief of Staff synthesis and Action Center.
+•	Phase 5: Add Customer Success workflows.
+•	Phase 6: Add two-way voice over the same operating core.
+•	Phase 7: Add Compliance.
+•	Phase 8: Add Finance services/AR/margin exceptions.
+•	Phase 9: Add Sales + Estimator.
+•	Phase 10: Promote only proven SOPs to L4.
+•	Phase 11: Generalize for multi-company CP360 product.
+24. Validation Rules Before Autonomy
+Gate	Requirement
+Accuracy	No fabricated operational facts; correct project/person/date/amount
+Reliability	Low failure and duplicate-action rates
+Human corrections	Edit/rejection rate below approved threshold
+Cost	Per-workflow AI cost understood and acceptable
+Audit	Complete trigger-to-verification trace
+Rollback	Action can be stopped/recovered where applicable
+Connector freshness	No autonomous conclusion from stale external state
+Security	Correct tenant, role, tool and approval enforcement
+Noise	False alert rate low enough for executive trust
+Autonomy promotion is SOP-specific. Never promote an entire agent to L4 simply because some of its workflows are reliable.
+25. Future Scale Triggers
+Signal	Then consider
+Workflow throughput exceeds existing job mechanism	Dedicated durable workflow/event infrastructure
+Audit table growth harms OLTP/reporting	Dedicated audit/event store
+One module dominates CPU/memory/deploy cadence	Extract that module into a service
+Connector volume causes independent scaling/failure needs	Dedicated connector workers
+Knowledge search latency/quality degrades materially	Specialized search/vector infrastructure
+Regional latency/compliance demands	Regional deployment/data partitioning
+Collections/finance exception volume becomes high and reasoning-heavy	Promote Finance/Collections agent
+Scaling Trigger Rule
+Scale when a metric or failure mode crosses a documented threshold. Do not scale because a diagram of a future enterprise architecture looks cleaner.
+26. Architecture Freeze Statement
+This architecture is now frozen for implementation. Further redesign should occur only if Phase 0 inspection reveals an existing CP360 technical constraint, a security/compliance requirement, or measured production behavior that invalidates an assumption.
+FINAL PRINCIPLE: Enterprise boundaries. Lean deployment. Deterministic first. AI where it earns its cost. Human authority where it matters. One simple CP360 experience.
