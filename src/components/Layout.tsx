@@ -8,11 +8,13 @@ import {
   HardHat, Menu, X, ChevronDown, Zap, Sun, Smartphone,
   Globe, Building2, Lock, FileText, Code2,
   Home, Vault, Plug, MessageSquare, Image, FileCheck, CreditCard, CalendarDays,
-  ChevronLeft, ChevronRight, Inbox, Microscope,
+  ChevronLeft, ChevronRight, Inbox, Microscope, Compass, ListChecks,
 } from 'lucide-react';
 
 type Page =
   | 'dashboard'
+  | 'command-center'
+  | 'action-center'
   | 'action-board'
   | 'tomorrow'
   | 'projects'
@@ -67,6 +69,8 @@ const convazantNavGroups: Record<string, string> = {
 
 const adminNavItems = [
   { id: 'dashboard',     label: 'Company Dashboard',    icon: LayoutDashboard },
+  { id: 'command-center',label: 'Command Center',       icon: Compass },
+  { id: 'action-center', label: 'Action Center',        icon: ListChecks },
   { id: 'action-board',  label: 'Action Board',         icon: Zap },
   { id: 'tomorrow',      label: "Tomorrow's Plan",      icon: Sun },
   { id: 'projects',      label: 'Projects',             icon: FolderOpen },
@@ -80,7 +84,7 @@ const adminNavItems = [
   { id: 'settings',      label: 'Settings',             icon: Settings },
 ];
 const adminNavGroups: Record<string, string> = {
-  dashboard: '', 'action-board': 'Today', tomorrow: 'Today',
+  dashboard: '', 'command-center': 'Today', 'action-center': 'Today', 'action-board': 'Today', tomorrow: 'Today',
   projects: 'Operations', tasks: 'Operations', 'daily-updates': 'Operations',
   permits: 'Compliance', files: 'Compliance', alerts: 'Compliance',
   reports: 'Management', company: 'Management', settings: 'Management',
@@ -88,6 +92,8 @@ const adminNavGroups: Record<string, string> = {
 
 const gcNavItems = [
   { id: 'dashboard',     label: 'Dashboard',            icon: LayoutDashboard },
+  { id: 'command-center',label: 'Command Center',       icon: Compass },
+  { id: 'action-center', label: 'Action Center',        icon: ListChecks },
   { id: 'action-board',  label: 'Action Board',         icon: Zap },
   { id: 'tomorrow',      label: "Tomorrow's Plan",      icon: Sun },
   { id: 'field-mode',    label: 'Field Mode',           icon: Smartphone },
@@ -98,7 +104,7 @@ const gcNavItems = [
   { id: 'alerts',        label: 'Alert Center',         icon: Bell },
 ];
 const gcNavGroups: Record<string, string> = {
-  dashboard: '', 'action-board': 'Today', tomorrow: 'Today', 'field-mode': 'Today',
+  dashboard: '', 'command-center': 'Today', 'action-center': 'Today', 'action-board': 'Today', tomorrow: 'Today', 'field-mode': 'Today',
   projects: 'My Work', tasks: 'My Work', 'daily-updates': 'My Work',
   permits: 'Compliance', alerts: 'Compliance',
 };

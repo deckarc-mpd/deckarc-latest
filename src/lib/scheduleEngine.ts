@@ -21,8 +21,10 @@ export async function cascadeDelayFromTask(
   reason: string,
   responsibleParty: string,
   actorName = 'System',
-  actorRole = 'System'
+  actorRole = 'System',
+  options: { dryRun?: boolean } = {}
 ): Promise<{ updatedCount: number; newProjectFinish: string | null }> {
+  const dryRun = options.dryRun ?? false;
   const { data: allTasks } = await supabase
     .from('tasks')
     .select('*')
@@ -94,44 +96,49 @@ export async function cascadeDelayFromTask(
     }
   }
 
-  // Apply updates and log
+  // Apply updates and log (skipped entirely in dry-run mode — the Controlled
+  // Tool / Policy layer calls this with dryRun:true to preview the cascade's
+  // impact, e.g. whether it would push the project finish date, before any
+  // row is written, see src/lib/aiBrain/tools/cascadeDelayTool.ts).
   let latestFinish: Date | null = null;
   for (const u of updates) {
-    await supabase.from('tasks').update({
-      projected_start_date: u.newProjStart,
-      projected_finish_date: u.newProjFinish,
-      delay_days: (u.old.delay_days || 0) + delayDays,
-      delay_source: changeType,
-      delay_reason: reason,
-    }).eq('id', u.id);
+    if (!dryRun) {
+      await supabase.from('tasks').update({
+        projected_start_date: u.newProjStart,
+        projected_finish_date: u.newProjFinish,
+        delay_days: (u.old.delay_days || 0) + delayDays,
+        delay_source: changeType,
+        delay_reason: reason,
+      }).eq('id', u.id);
 
-    await supabase.from('schedule_change_log').insert({
-      project_id: projectId,
-      affected_task_id: u.id,
-      change_type: changeType,
-      old_start_date: u.old.projected_start_date || u.old.planned_start_date,
-      new_start_date: u.newProjStart,
-      old_finish_date: u.old.projected_finish_date || u.old.planned_finish_date,
-      new_finish_date: u.newProjFinish,
-      old_projected_finish_date: oldProjectFinish,
-      reason,
-      responsible_party: responsibleParty,
-    });
+      await supabase.from('schedule_change_log').insert({
+        project_id: projectId,
+        affected_task_id: u.id,
+        change_type: changeType,
+        old_start_date: u.old.projected_start_date || u.old.planned_start_date,
+        new_start_date: u.newProjStart,
+        old_finish_date: u.old.projected_finish_date || u.old.planned_finish_date,
+        new_finish_date: u.newProjFinish,
+        old_projected_finish_date: oldProjectFinish,
+        reason,
+        responsible_party: responsibleParty,
+      });
 
-    const taskName = u.old.task_name || u.id;
-    await supabase.from('activity_log').insert({
-      project_id: projectId,
-      user_id: null,
-      user_full_name: actorName,
-      user_role: actorRole,
-      action_type: `Schedule Cascaded: ${changeType}`,
-      module: 'Schedule',
-      related_record_id: u.id,
-      related_record_type: 'task',
-      old_value: u.old.projected_finish_date || u.old.planned_finish_date || '',
-      new_value: u.newProjFinish || '',
-      notes: `${taskName} pushed +${delayDays}d. Reason: ${reason}`,
-    });
+      const taskName = u.old.task_name || u.id;
+      await supabase.from('activity_log').insert({
+        project_id: projectId,
+        user_id: null,
+        user_full_name: actorName,
+        user_role: actorRole,
+        action_type: `Schedule Cascaded: ${changeType}`,
+        module: 'Schedule',
+        related_record_id: u.id,
+        related_record_type: 'task',
+        old_value: u.old.projected_finish_date || u.old.planned_finish_date || '',
+        new_value: u.newProjFinish || '',
+        notes: `${taskName} pushed +${delayDays}d. Reason: ${reason}`,
+      });
+    }
 
     if (u.newProjFinish) {
       const d = new Date(u.newProjFinish);
@@ -145,19 +152,22 @@ export async function cascadeDelayFromTask(
     const oldDate = new Date(oldProjectFinish);
     if (latestFinish > oldDate) {
       newProjectFinish = latestFinish.toISOString().split('T')[0];
-      await supabase.from('projects').update({
-        projected_finish_date: newProjectFinish,
-        status: 'Delayed',
-        alert_status: 'red',
-      }).eq('id', projectId);
 
-      // Update log entries with new project finish
-      for (const u of updates) {
-        await supabase.from('schedule_change_log')
-          .update({ new_projected_finish_date: newProjectFinish })
-          .eq('affected_task_id', u.id)
-          .eq('project_id', projectId)
-          .is('new_projected_finish_date', null);
+      if (!dryRun) {
+        await supabase.from('projects').update({
+          projected_finish_date: newProjectFinish,
+          status: 'Delayed',
+          alert_status: 'red',
+        }).eq('id', projectId);
+
+        // Update log entries with new project finish
+        for (const u of updates) {
+          await supabase.from('schedule_change_log')
+            .update({ new_projected_finish_date: newProjectFinish })
+            .eq('affected_task_id', u.id)
+            .eq('project_id', projectId)
+            .is('new_projected_finish_date', null);
+        }
       }
     }
   }

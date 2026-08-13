@@ -10,6 +10,8 @@ import GCDashboardPage from './pages/GCDashboardPage';
 import SubcontractorDashboardPage from './pages/SubcontractorDashboardPage';
 import ClientDashboardPage from './pages/ClientDashboardPage';
 import ActionBoardPage from './pages/ActionBoardPage';
+import CommandCenterPage from './pages/CommandCenterPage';
+import ActionCenterPage from './pages/ActionCenterPage';
 import TomorrowWorkPage from './pages/TomorrowWorkPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ClientProjectsPage from './pages/ClientProjectsPage';
@@ -264,7 +266,7 @@ function AppContent() {
 
     // ── CLIENT route guards ──────────────────────────────────────────────
     // Client must never reach internal operational pages.
-    if (isClient && ['action-board', 'tomorrow', 'tasks', 'daily-updates', 'permits',
+    if (isClient && ['command-center', 'action-center', 'action-board', 'tomorrow', 'tasks', 'daily-updates', 'permits',
       'alerts', 'field-mode', 'reports', 'users', 'integrations', 'templates', 'files', 'company'].includes(currentPage)) {
       return renderDashboard();
     }
@@ -299,6 +301,10 @@ function AppContent() {
     switch (currentPage) {
       case 'dashboard':
         return renderDashboard();
+      case 'command-center':
+        return <CommandCenterPage onOpenActionCenter={() => setCurrentPage('action-center')} />;
+      case 'action-center':
+        return <ActionCenterPage onViewProject={viewProject} />;
       case 'action-board':
         return <ActionBoardPage onViewProject={viewProject} initialFilter={actionBoardFilter} focusItemId={actionBoardFocusItemId} focusAlertTitle={actionBoardFocusAlertTitle} />;
       case 'tomorrow':
