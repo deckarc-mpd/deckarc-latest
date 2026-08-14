@@ -1,0 +1,309 @@
+For all designs, make them beautiful, clean, premium, and production-ready — not cookie cutter. Build fully featured pages that feel worthy of a real SaaS product.
+
+This project uses JSX syntax with Tailwind CSS classes, React hooks, and lucide-react for icons. Use icons from lucide-react. Do not install additional UI/icon/theme packages unless absolutely necessary or explicitly requested.
+
+====================================================
+CP360 / CONSTRUCTIONPROGRESS360 PRODUCT CONTEXT
+====================================================
+
+Product:
+CP360 / ConstructionProgress360
+
+Company/Product context:
+CP360 is a CONVAZANT product. DECKARC LLC is one customer/workspace, not the hardcoded product brand.
+
+Core positioning:
+CP360 is the daily operations command center that removes the owner as the bottleneck between the field and the homeowner.
+
+Core wedge:
+Turn today’s chaos into tomorrow’s plan.
+
+Primary ICP:
+Owner-led remodelers and addition contractors managing 3–15 active projects.
+
+Primary product promise:
+Every morning, the contractor should know:
+- what changed yesterday
+- what needs attention today
+- what could delay tomorrow
+- what the homeowner can safely see
+
+Core product loop:
+Field update comes in
+→ CP360 turns it into an action/status
+→ Owner sees it in the daily command center
+→ Tomorrow’s Plan updates
+→ Client-safe update can be shared
+
+Real competitor:
+The real competitor is not only Buildertrend, Houzz Pro, JobTread, or Procore. The real competitor is:
+- owner memory
+- text messages
+- WhatsApp
+- phone calls
+- Google Drive
+- spreadsheets
+- jobsite photos buried in phones
+
+====================================================
+DESIGN DIRECTION
+====================================================
+
+Make the UI clean, premium, simple, and calm.
+Use a professional construction SaaS feel.
+Avoid clutter.
+Avoid heavy enterprise-style screens.
+Use whitespace, clear hierarchy, soft cards, subtle dividers, and calm status colors.
+
+Preferred app navigation style:
+Use a HouzzPro-inspired layout:
+- dark compact main left navigation
+- clear active states
+- white secondary sidebar for project/company/settings sections when needed
+- tree-style secondary navigation for grouped sections
+- compact spacing with breathing room
+- no cluttered badges in sidebars
+- direct landing into useful sections instead of generic overview cards
+
+For tables:
+- headers can be bold
+- badges/buttons can be emphasized
+- normal row cell text should not be overly bold
+- avoid dense, hard-to-scan tables when cards would work better on mobile
+
+Mobile:
+The MVP is web-first, but it must work well on mobile browser.
+Make pages responsive.
+No tiny tables on mobile.
+Use cards, stacked layouts, large tap targets, and simple upload/update actions.
+
+====================================================
+ROLE SAFETY
+====================================================
+
+Always respect role-based access.
+
+Roles include:
+- CONVAZANT Super Admin
+- DECKARC Admin / Company Admin
+- GC / Project Manager
+- Subcontractor
+- Client / Homeowner
+
+Client/Homeowner users should only see client-safe information.
+
+Never expose the following to clients unless explicitly marked client-visible:
+- internal admin notes
+- internal GC/sub notes
+- internal financials
+- internal operational records
+- private permit/inspection notes
+- internal files/photos
+
+Client Portal Preview:
+- must remain read-only for risky actions
+- must not switch Supabase auth user
+- can show the client experience safely
+- must not allow upload, delete, payment actions, message sends, or edits unless explicitly requested
+
+====================================================
+PROJECT AND CLIENT RULES
+====================================================
+
+Projects should be separate records.
+
+A client can have multiple linked projects through project_users.
+
+For client users:
+- if linkedProjects.length === 1, open that project directly
+- if linkedProjects.length > 1, show My Projects
+- if linkedProjects.length === 0, show a safe empty state
+
+Do not merge multiple projects into one record.
+Do not create parent/child project structures unless explicitly requested.
+
+Admin Projects list:
+Separate project rows are correct.
+If needed, create a View by Client grouping UI, but keep each project as its own record.
+
+Add Another Project for This Client:
+When creating another project for the same client:
+- create a clean separate project record
+- link it to the same CLIENT user through project_users
+- normalize client email using trim().toLowerCase()
+- prefill client details
+- prefill current project property/address/location details
+- keep all property/address fields editable
+- save form values, not blindly copied values
+- do not create duplicate client users
+- do not create duplicate project_users links
+
+Do not copy old operational records into the new project:
+- tasks
+- milestones
+- permits
+- inspections
+- files
+- photos
+- messages
+- selections
+- payments
+- schedule impacts
+- daily updates
+- action items
+- materials
+- checklist items
+
+====================================================
+LIVE OPERATIONS RULES
+====================================================
+
+Operational dashboards should exclude:
+- deleted projects
+- archived projects
+- completed projects
+
+unless the page is specifically for history/archive/deleted records.
+
+Permit/inspection logic should respect permit applicability:
+- Applicable
+- Not Applicable
+- To Be Confirmed
+
+If permits are Not Applicable:
+- do not show false permit blockers
+- do not create live operations alerts for permit issues
+- preserve existing records safely if any exist
+
+Tomorrow’s Plan and ProjectPulse should focus on:
+- tasks starting tomorrow
+- tasks due tomorrow
+- tasks continuing tomorrow
+- schedule impacts affecting tomorrow
+- crew/material readiness
+- scheduled inspections
+- blockers and urgent items
+
+ProjectPulse should reflect active Action Board states:
+- active items = not Done and not snoozed
+- resolved items = Done
+- do not show red critical styling when active count is zero
+
+====================================================
+FILE / DOCUMENT RULES
+====================================================
+
+Before save/upload:
+Selected files are temporary and must be removable before upload.
+If a user accidentally selects the same file twice, show a duplicate warning.
+Only upload files still in the queue when Save/Upload is clicked.
+
+After save/upload:
+Files should be managed records with:
+- View
+- Download
+- Delete, based on role permissions
+- uploaded date/time
+- uploaded by
+- user role if available
+- visibility badge if applicable
+
+Use role-safe permissions:
+- Admin can manage project files
+- GC can manage allowed project files
+- Subcontractor can usually delete only their own uploads
+- Client can only see client-visible files and delete only allowed own uploads
+- Client Portal Preview must not allow upload/delete
+
+Do not expose internal-only files to clients.
+
+Use soft delete if supported:
+- is_deleted
+- deleted_at
+- deleted_by
+
+Do not physically delete from storage unless the existing app pattern already does this safely.
+
+====================================================
+CURRENT LAUNCH STRATEGY
+====================================================
+
+CP360 is currently in Proof Mode.
+
+Avoid overbuilding.
+Do not expand into a full ERP, estimating system, accounting system, or broad Buildertrend replacement unless explicitly requested.
+
+Current launch focus:
+- landing page
+- 90-second demo video
+- 50 contractor outreach list
+- 3 paid pilots at $199/month
+
+Founding Pilot offer:
+- $199/month for 90 days
+- no setup fee for the first 3 customers
+- done-for-you setup for 1 live project
+- Admin + GC + client portal
+- unlimited homeowner and subcontractor access
+- weekly founder support
+- founder pricing locked for 12 months
+
+30-day promise:
+In 30 days, the customer should have one live project running through CP360 with homeowner updates, blocker tracking, and Tomorrow’s Plan in one place.
+
+Do not prioritize:
+- new roles
+- advanced permissions
+- deep reports
+- extra dashboards
+- more research features
+- broad platform expansion
+
+unless they are needed for a live demo, a paid pilot, or explicitly requested.
+
+====================================================
+MARKETING LANGUAGE
+====================================================
+
+Use contractor-friendly language:
+- Turn today’s chaos into tomorrow’s plan
+- Stop being the bottleneck
+- Stop being the middleman between the field and the homeowner
+- What changed yesterday
+- What needs attention today
+- What could delay tomorrow
+- Client-safe updates
+- One live project
+- Founding Pilot
+- Less chasing
+- Fewer surprises
+- Tomorrow’s plan
+- Owner overload
+- Daily command center
+
+Avoid:
+- all-in-one platform
+- digital transformation
+- enterprise-grade ERP
+- AI-powered construction management as the main pitch
+- generic project management software
+- replace everything you use
+- complicated system language
+
+AI is a supporting feature only. Do not lead with AI-first positioning.
+
+====================================================
+BUILDING RULE
+====================================================
+
+Before making large changes, preserve existing working behavior.
+Do focused enhancements.
+Avoid broad rewrites unless explicitly requested.
+Do not redesign navigation, project pages, client portal, or database schema unless the request clearly requires it.
+
+When unsure, prioritize:
+1. role safety
+2. client-safe visibility
+3. simple daily workflow
+4. mobile-friendly web usability
+5. proof-mode launch speed

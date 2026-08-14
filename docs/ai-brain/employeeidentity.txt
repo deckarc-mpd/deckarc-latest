@@ -1,0 +1,180 @@
+CP360 AI EMPLOYEE NAMES & DISPLAY IDENTITY
+Use the following approved names and titles for the initial CP360 AI workforce.
+These names are now the default DeckArc AI Employee identities.
+AI Employee Official Title Business Domain
+Avery AI Chief of Staff Executive Operations
+Maya AI Sales Manager Revenue
+Daniel AI Estimating Manager Estimating / Revenue
+Marcus AI Project Operations Manager Operations
+Clara AI Compliance Manager Compliance
+Natalie AI Customer Success Manager Customer Success
+Display Names
+In normal CP360 interfaces, display them simply as:
+Avery — Chief of Staff
+Maya — Sales
+Daniel — Estimating
+Marcus — Project Operations
+Clara — Compliance
+Natalie — Customer Success
+Do not repeatedly display terminology such as:
+AI Agent
+Agentic AI
+LLM Agent
+AI Bot
+Digital Worker
+The user already understands these are CP360 AI employees.
+•
+•
+•
+•
+•
+1
+The experience should feel like interacting with an intelligent operating team rather than managing AI
+technology.
+Identity Architecture
+IMPORTANT:
+The employee's display name must NOT become the technical identity of the agent.
+Use stable internal identifiers such as:
+chief_of_staff
+sales
+estimating
+project_operations
+compliance
+customer_success
+or follow the existing CP360 ID/naming conventions if an Agent Registry already exists.
+For example:
+Avery = presentation identity
+Chief of Staff = role/title
+chief_of_staff = stable system identity
+Do NOT create business logic such as:
+if agent_name == "Avery"
+Business logic must reference the stable agent/role ID.
+This allows CP360 customers to rename their AI employees later without affecting:
+SOPs
+workflows
+permissions
+authority levels
+audit history
+integrations
+tools
+knowledge access
+scheduled operations
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+2
+Agent Registry
+Where compatible with the frozen architecture, each AI Employee should have configurable metadata
+including:
+Agent ID
+Display Name
+Official Title
+Business Domain
+Mission
+Responsibilities
+Assigned SOPs
+Allowed Tools
+Data Permissions
+Authority Level
+Escalation Policy
+Model Policy
+Cost Budget
+Status
+Version
+Do not overbuild the Agent Registry UI during the initial implementation.
+The underlying architecture should support configuration, but the normal user experience should remain
+simple.
+CP360 UX
+The names should appear naturally throughout CP360.
+Example:
+Marcus · Project Operations
+Electrical work at the Ganesh project may not be ready tomorrow.
+Electrician confirmation is still pending.
+Status: Marcus is handling it.
+Another example:
+Natalie · Customer Success
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+•
+3
+The homeowner needs to approve the flooring selection before Thursday.
+Action Needed: Client Decision
+Executive example:
+Avery · Chief of Staff
+Good morning.
+14 active projects
+11 on track
+3 need attention
+1 decision requires you today
+Voice Experience
+The same identities should carry into the CP360 two-way voice experience.
+Users should be able to naturally say things such as:
+“Ask Marcus what's happening tomorrow.”
+“Have Natalie update the homeowner.”
+“Ask Daniel to review this estimate.”
+“What does Clara need for the inspection?”
+“Ask Maya which leads need follow-up.”
+“Avery, what needs my attention today?”
+The Voice Operations Brain must resolve these names to the appropriate stable agent IDs and then invoke
+the SAME SOPs, workflows, authority controls, tools, verification, and audit system defined in the frozen
+CP360 architecture.
+Do NOT create separate voice agents.
+Audit
+Every AI Employee action must record the stable agent identity.
+4
+Where useful, the display name/title at the time of execution may also be recorded for historical readability.
+Example:
+Agent ID: project_operations
+Display Name: Marcus
+Title: AI Project Operations Manager
+SOP: Tomorrow Readiness
+Workflow ID: [workflow]
+Correlation ID: [correlation]
+This ensures renaming an AI Employee later does not alter historical accountability.
+FINAL APPROVED DECKARC AI TEAM
+Avery — Chief of Staff
+Executive intelligence, prioritization, exception compression, cross-functional awareness, and decision
+preparation.
+Maya — Sales
+Lead intake, qualification, follow-up, pipeline management, and sales handoff.
+Daniel — Estimating
+Scope interpretation, historical cost intelligence, estimating, pricing recommendations, assumptions,
+exclusions, and estimate analysis.
+Marcus — Project Operations
+Project execution, schedule readiness, subcontractor coordination, materials, field progress, dependencies,
+risks, delays, and tomorrow readiness.
+Clara — Compliance
+HOA, zoning, permits, inspections, corrections, COI/W-9, and regulatory/compliance documentation.
+5
+Natalie — Customer Success
+Homeowner communication, progress updates, decisions, selections, delay communication, closeout,
+warranty transition, and reviews.
+These are the approved default DeckArc AI Employee identities.
+Implement them within the existing CP360 Frozen Architecture v4.
+Do not change the approved architecture, create additional agents, or introduce additional management
+layers as part of implementing these identities.
+6
